@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logincomplete/src/bloc/Provider.dart';
 import 'package:logincomplete/src/pages/home_page.dart';
 import 'package:logincomplete/src/pages/login_page.dart';
+import 'package:logincomplete/src/pages/product_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,10 +16,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'App',
-        initialRoute: 'login',
+        initialRoute: 'home',
         routes: {
           'login': (BuildContext context) => LoginPage(),
-          'home': (BuildContext context) => HomePage()
+          'home': (BuildContext context) => HomePage(),
+          'product':(BuildContext context) => ProductPage()
         },
         theme: ThemeData(
           primaryColor: Colors.deepPurple

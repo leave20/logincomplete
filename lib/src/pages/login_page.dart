@@ -3,6 +3,7 @@ import 'package:logincomplete/src/bloc/Provider.dart';
 import 'package:logincomplete/src/bloc/login_bloc.dart';
 
 class LoginPage extends StatelessWidget {
+  //Custom button
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: Colors.deepPurple,
@@ -109,7 +110,7 @@ class LoginPage extends StatelessWidget {
                   SizedBox(height: 30.0),
                   _createPassword(bloc),
                   SizedBox(height: 30.0),
-                  _createButon(bloc)
+                  _createButton(bloc)
                 ],
               )),
           Text('Please, write your password'),
@@ -154,7 +155,7 @@ class LoginPage extends StatelessWidget {
             child: TextField(
               cursorColor: Colors.deepPurple,
               obscureText: true,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.lock_outline,
@@ -171,14 +172,29 @@ class LoginPage extends StatelessWidget {
         });
   }
 
-  Widget _createButon(LoginBloc bloc) {
-    return ElevatedButton(
-      style: raisedButtonStyle,
-      onPressed: () {},
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-        child: Text('Access'),
-      ),
-    );
+  Widget _createButton(LoginBloc bloc) {
+    return StreamBuilder(
+        stream: bloc.formValidStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return ElevatedButton(
+            style: raisedButtonStyle,
+            onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+              child: Text('Access'),
+            ),
+          );
+        });
+  }
+
+  _login(LoginBloc bloc, BuildContext context) {
+    print('==============');
+    print('E-mail:${bloc.email} ');
+    print('==============');
+    print('Password:${bloc.password}');
+    print('==============');
+    
+    Navigator.pushReplacementNamed(context, 'home');
+    
   }
 }
